@@ -31,24 +31,35 @@ public class CommandManager extends ListenerAdapter
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event)
     {
-
         Message message = event.getMessage();
-        String messageContent = message.getContent();
-        String[] command = messageContent.split(" ");
 
-        ICommand executableCommand = null;
+        String stringCommand = message.getContent().split(" ")[0];
 
-        if (!command[0].startsWith(prefix))
+        if (!stringCommand.startsWith(prefix))
+        {
             return;
-
-        if (command[0].equalsIgnoreCase("!ping"))
-        {
-            executableCommand = new PingCommand(event);
         }
 
-        if (executableCommand != null)
+        try
         {
-            new Thread(executableCommand).start();
+            ICommand executableCommand = null;
+            Commands command = Commands.valueOf(stringCommand.substring(1).toUpperCase());
+
+            switch (command)
+            {
+                case PING:
+                    executableCommand = new PingCommand(event);
+                    break;
+                default:
+                    break;
+            }
+
+            if (executableCommand != null)
+            {
+                new Thread(executableCommand).start();
+            }
         }
+        catch (IllegalArgumentException ignored)
+        { }
     }
 }
