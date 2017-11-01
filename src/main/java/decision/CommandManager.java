@@ -1,7 +1,6 @@
 package decision;
 
-import execution.ICommand;
-import execution.PingCommand;
+import execution.*;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -14,6 +13,7 @@ import java.util.Properties;
 public class CommandManager extends ListenerAdapter
 {
     private final String prefix;
+    private final String voiceCreateCategory;
 
     /**
      * Manages actions taken when what command needs to be executed or not
@@ -22,6 +22,7 @@ public class CommandManager extends ListenerAdapter
     public CommandManager(Properties properties)
     {
         prefix = properties.getProperty("Prefix");
+        voiceCreateCategory = properties.getProperty("VoiceCreateCategory");
     }
 
     /**
@@ -50,14 +51,14 @@ public class CommandManager extends ListenerAdapter
                 case PING:
                     executableCommand = new PingCommand(event);
                     break;
+                case MAKECHANNEL:
+                    executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
+                    break;
                 default:
                     break;
             }
 
-            if (executableCommand != null)
-            {
-                new Thread(executableCommand).start();
-            }
+            new Thread(executableCommand).start();
         }
         catch (IllegalArgumentException ignored)
         { }

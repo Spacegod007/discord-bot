@@ -5,5 +5,6 @@ package decision;
  */
 public enum Commands
 {
-    PING
+    PING,
+    MAKECHANNEL
 }
