@@ -1,5 +1,6 @@
-package execution;
+package execution.command;
 
+import execution.ICommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 

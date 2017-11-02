@@ -1,5 +1,6 @@
-package execution;
+package execution.command;
 
+import execution.ICommand;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -28,25 +29,36 @@ public class MakeChannelCommand implements ICommand
         String[] command = message.getContent().split(" ");
         if (command.length > 1)
         {
-            List<Category> categories = event.getGuild().getCategories();
-
-            for (Category category : categories)
+            if (command[1].length() > 1)
             {
-                System.out.println(category.getName());
-                if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
+                List<Category> categories = event.getGuild().getCategories();
+
+                for (Category category : categories)
                 {
-                    category.createVoiceChannel(joinArray(command, 1, " ")).queue();
-                    break;
+                    if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
+                    {
+                        category.createVoiceChannel(joinArray(command, 1, " ")).queue();
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                errormention(message, "A channelname is required to be at least 2 characters long");
             }
         }
         else
         {
-            String authorMention = message.getAuthor().getAsMention();
-            String authorName = message.getAuthor().getName();
-            String errorMessage = String.format(authorMention + "Command not executed due to missing channel name argument%nPlease specify a name like so: \"!makechannel " + authorName + "'s channel\"");
-            message.getChannel().sendMessage(errorMessage).queue();
+            errormention(message, String.format("Error, couldn't create a channel due to missing channelname.%n" +
+                    "Please create a channel like so: \"!makeChannel " + message.getAuthor().getName() + "'s channel\""));
         }
+    }
+
+    private void errormention(Message message, String errormessage)
+    {
+        String authorMention = message.getAuthor().getAsMention();
+        String errorMessage = String.format(authorMention + " " + errormessage);
+        message.getChannel().sendMessage(errorMessage).queue();
     }
 
     /**
