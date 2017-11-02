@@ -1,6 +1,5 @@
 package execution.timecheck;
 
-import execution.exceptions.InvalidGuildCategoryException;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
@@ -17,7 +16,7 @@ public class VoiceChannelTimeCheck extends TimerTask
     private final String autoVoiceChannelCategoryName;
     private final Guild guild;
 
-    public VoiceChannelTimeCheck(Guild guild, String autoVoiceChannelCategoryName) throws InvalidGuildCategoryException
+    public VoiceChannelTimeCheck(Guild guild, String autoVoiceChannelCategoryName)
     {
         this.guild = guild;
         this.autoVoiceChannelCategoryName = autoVoiceChannelCategoryName;
