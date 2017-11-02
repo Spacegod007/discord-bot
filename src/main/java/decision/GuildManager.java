@@ -1,6 +1,5 @@
 package decision;
 
-import execution.exceptions.InvalidGuildCategoryException;
 import execution.timecheck.VoiceChannelTimeCheck;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -14,7 +13,8 @@ import java.util.*;
  */
 public class GuildManager extends ListenerAdapter
 {
-    Map timers;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private final Map timers;
     private final String autoVoiceChannelCategoryName;
 
     public GuildManager(List<Guild> guilds, Properties properties)
@@ -46,13 +46,8 @@ public class GuildManager extends ListenerAdapter
     private void addVoiceChannelTimerCheck(Guild guild)
     {
         Timer timer = new Timer();
-        try
-        {
-            timer.scheduleAtFixedRate(new VoiceChannelTimeCheck(guild, autoVoiceChannelCategoryName),0, 2000);
-        } catch (InvalidGuildCategoryException e)
-        {
-            e.getGuild().getDefaultChannel().sendMessage(e.getMessage()).queue();
-        }
+        timer.scheduleAtFixedRate(new VoiceChannelTimeCheck(guild, autoVoiceChannelCategoryName),0, 2000);
+        //noinspection unchecked
         timers.put(guild.getName(), timer);
     }
 

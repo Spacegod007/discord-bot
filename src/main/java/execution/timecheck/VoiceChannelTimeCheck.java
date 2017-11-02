@@ -2,6 +2,7 @@ package execution.timecheck;
 
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
 import java.time.OffsetDateTime;
@@ -25,9 +26,13 @@ public class VoiceChannelTimeCheck extends TimerTask
 
         if (guildCategories.size() != 1)
         {
-            guild.getDefaultChannel().sendMessage(String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
-                    "%nWhich is required for this an automatic channel creation system." +
-                    "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category.")).queue();
+            TextChannel defaultChannel = guild.getDefaultChannel();
+            if (defaultChannel != null)
+            {
+                defaultChannel.sendMessage(String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
+                        "%nWhich is required for this an automatic channel creation system." +
+                        "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category.")).queue();
+            }
         }
     }
 

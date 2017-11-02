@@ -12,23 +12,20 @@ import net.dv8tion.jda.core.managers.Presence;
 
 import javax.security.auth.login.LoginException;
 import java.util.Properties;
-import java.util.Timer;
 
 /**
  * Main bot class, manages entire bot
  */
 public class Bot extends ListenerAdapter
 {
-    private JDA api;
-    private Presence me;
 
     public Bot(Properties properties)
     {
         String token = properties.getProperty("Token");
         try
         {
-            api = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
-            me = api.getPresence();
+            JDA api = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
+            Presence me = api.getPresence();
             me.setGame(Game.of("tweaking myself ;)"));
 
             //Events

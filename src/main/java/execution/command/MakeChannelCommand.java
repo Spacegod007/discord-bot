@@ -63,7 +63,7 @@ public class MakeChannelCommand implements ICommand
     private void errormention(Message message, String errormessage)
     {
         String authorMention = message.getAuthor().getAsMention();
-        String errorMessage = String.format(authorMention + " " + errormessage);
+        String errorMessage = authorMention + " " + errormessage;
         message.getChannel().sendMessage(errorMessage).queue();
     }
 
