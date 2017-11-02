@@ -26,7 +26,7 @@ public class Bot extends ListenerAdapter
         {
             JDA api = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
             Presence me = api.getPresence();
-            me.setGame(Game.of("tweaking myself ;)"));
+            me.setGame(Game.of("my program"));
 
             //Events
             api.addEventListener(new GuildManager(api.getGuilds(), properties));

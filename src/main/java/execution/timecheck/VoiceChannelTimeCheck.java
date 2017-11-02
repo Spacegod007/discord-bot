@@ -27,6 +27,7 @@ public class VoiceChannelTimeCheck extends TimerTask
         if (guildCategories.size() != 1)
         {
             TextChannel defaultChannel = guild.getDefaultChannel();
+
             if (defaultChannel != null)
             {
                 defaultChannel.sendMessage(String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
@@ -47,7 +48,7 @@ public class VoiceChannelTimeCheck extends TimerTask
 
             for (VoiceChannel voiceChannel : voiceChannels)
             {
-                if (voiceChannel.getMembers().isEmpty() && isTimeOneMinuteLater(voiceChannel.getCreationTime()))
+                if (voiceChannel.getMembers().isEmpty() && hasOneMinutePassedSince(voiceChannel.getCreationTime()))
                 {
                     voiceChannel.delete().queue();
                 }
@@ -55,7 +56,7 @@ public class VoiceChannelTimeCheck extends TimerTask
         }
     }
 
-    private boolean isTimeOneMinuteLater(OffsetDateTime origin)
+    private boolean hasOneMinutePassedSince(OffsetDateTime origin)
     {
         return (OffsetDateTime.now().toEpochSecond() - origin.toEpochSecond()) > 60;
     }

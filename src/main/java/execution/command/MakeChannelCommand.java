@@ -26,7 +26,10 @@ public class MakeChannelCommand implements ICommand
     public void run()
     {
         Message message = event.getMessage();
+        message.delete().submit(false);
+
         String[] command = message.getContent().split(" ");
+
         if (command.length > 1)
         {
             if (command[1].length() > 1)

@@ -21,15 +21,15 @@ class Program
 
         if (properties != null)
         {
-            if (!properties.contains("Token"))
+            if (!properties.containsKey("Token"))
             {
                 System.out.println("Error, token property not found in properties file.");
             }
-            else if (!properties.contains("Prefix"))
+            else if (!properties.containsKey("Prefix"))
             {
                 System.out.println("Error, Prefix property not found in properties file.");
             }
-            else if (!properties.contains("VoiceCreateCategory"))
+            else if (!properties.containsKey("VoiceCreateCategory"))
             {
                 System.out.println("Error, VoiceCreateCategory property not found in properties file.");
             }
@@ -56,7 +56,7 @@ class Program
         catch (FileNotFoundException e)
         {
             System.out.println("Error, Properties file not found, please place one in the main directory of this program");
-            return  null;
+            return null;
         }
         catch (IOException e)
         {
