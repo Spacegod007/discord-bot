@@ -19,7 +19,25 @@ class Program
     {
         Properties properties = getProperties();
 
-        new Bot(properties);
+        if (properties != null)
+        {
+            if (!properties.contains("Token"))
+            {
+                System.out.println("Error, token property not found in properties file.");
+            }
+            else if (!properties.contains("Prefix"))
+            {
+                System.out.println("Error, Prefix property not found in properties file.");
+            }
+            else if (!properties.contains("VoiceCreateCategory"))
+            {
+                System.out.println("Error, VoiceCreateCategory property not found in properties file.");
+            }
+            else
+            {
+                new Bot(properties);
+            }
+        }
     }
 
     /**
@@ -28,16 +46,23 @@ class Program
      */
     private static Properties getProperties()
     {
-        File file = new File("properties/bot.properties");
+        File file = new File("bot.properties");
         Properties properties = new Properties();
 
         try (InputStream inputStream = new FileInputStream(file))
         {
             properties.load(inputStream);
-        } catch (IOException e)
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("Error, Properties file not found, please place one in the main directory of this program");
+            return  null;
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
+
         return properties;
     }
 }
