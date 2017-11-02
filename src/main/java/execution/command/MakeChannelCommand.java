@@ -33,6 +33,12 @@ public class MakeChannelCommand implements ICommand
             {
                 List<Category> categories = event.getGuild().getCategories();
 
+                if (categories == null)
+                {
+                    errormention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
+                    return;
+                }
+
                 for (Category category : categories)
                 {
                     if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
@@ -44,7 +50,7 @@ public class MakeChannelCommand implements ICommand
             }
             else
             {
-                errormention(message, "A channelname is required to be at least 2 characters long");
+                errormention(message, "Error, A channelname is required to be at least 2 characters long");
             }
         }
         else

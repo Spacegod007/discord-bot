@@ -20,17 +20,16 @@ public class VoiceChannelTimeCheck extends TimerTask
     public VoiceChannelTimeCheck(Guild guild, String autoVoiceChannelCategoryName) throws InvalidGuildCategoryException
     {
         this.guild = guild;
+        this.autoVoiceChannelCategoryName = autoVoiceChannelCategoryName;
 
         List<Category> guildCategories = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
         if (guildCategories.size() != 1)
         {
-            throw new InvalidGuildCategoryException(guild, String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
+            guild.getDefaultChannel().sendMessage(String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
                     "%nWhich is required for this an automatic channel creation system." +
-                    "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category."));
+                    "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category.")).queue();
         }
-
-        this.autoVoiceChannelCategoryName = autoVoiceChannelCategoryName;
     }
 
     @Override
