@@ -51,8 +51,7 @@ public class GuildManager extends ListenerAdapter
             timer.scheduleAtFixedRate(new VoiceChannelTimeCheck(guild, autoVoiceChannelCategoryName),0, 2000);
         } catch (InvalidGuildCategoryException e)
         {
-            e.printStackTrace();
-            e.getGuild().getDefaultChannel().sendMessage(e.getMessage());
+            e.getGuild().getDefaultChannel().sendMessage(e.getMessage()).queue();
         }
         timers.put(guild.getName(), timer);
     }
