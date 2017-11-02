@@ -55,7 +55,11 @@ class Program
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("Error, Properties file not found, please place one in the main directory of this program");
+            System.out.println("Error, Properties file not found");
+            System.out.println("Creating properties file automatically");
+
+            makeProperties(properties, file);
+
             return null;
         }
         catch (IOException e)
@@ -64,5 +68,21 @@ class Program
         }
 
         return properties;
+    }
+
+    private static void makeProperties(Properties properties, File file)
+    {
+        properties.setProperty("Token", "");
+        properties.setProperty("Prefix", "");
+        properties.setProperty("VoiceCreateCategory", "");
+
+        try (OutputStream outputStream = new FileOutputStream(file))
+        {
+            properties.store(outputStream, "Properties file stores general bot properties");
+            System.out.println("Done creating properties file.");
+            System.out.println("Properties file located at:" + System.getProperties().getProperty("line.separator") + file.getPath());
+            System.out.println("Please provide it with the requested options before running the program again.");
+        }
+        catch (IOException ignored) { }
     }
 }
