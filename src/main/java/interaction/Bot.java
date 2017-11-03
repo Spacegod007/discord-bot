@@ -18,7 +18,6 @@ import java.util.Properties;
  */
 public class Bot extends ListenerAdapter
 {
-
     public Bot(Properties properties)
     {
         String token = properties.getProperty("Token");
@@ -26,7 +25,8 @@ public class Bot extends ListenerAdapter
         {
             JDA api = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
             Presence me = api.getPresence();
-            me.setGame(Game.of("my program"));
+
+            me.setGame(Game.of(properties.getProperty("Playing")));
 
             //Hook event listeners
             api.addEventListener(new GuildManager(api.getGuilds(), properties));

@@ -51,6 +51,11 @@ class Program
                 System.out.println("Error, VoiceCreateCategory property not found in properties file.");
                 return false;
             }
+            else if (!properties.containsKey("Playing"))
+            {
+                System.out.println("Error, Playing property not found in properties file.");
+                return false;
+            }
             return true;
         }
         return false;
@@ -117,5 +122,6 @@ class Program
         properties.setProperty("Token", "");
         properties.setProperty("Prefix", "");
         properties.setProperty("VoiceCreateCategory", "");
+        properties.setProperty("Playing", "");
     }
 }
