@@ -21,23 +21,39 @@ class Program
 
         if (properties != null)
         {
+            if (checkForProperties(properties))
+            {
+                new Bot(properties);
+            }
+            else
+            {
+                System.exit(-1);
+            }
+        }
+    }
+
+    private static boolean checkForProperties(Properties properties)
+    {
+        if (properties != null)
+        {
             if (!properties.containsKey("Token"))
             {
                 System.out.println("Error, token property not found in properties file.");
+                return false;
             }
             else if (!properties.containsKey("Prefix"))
             {
                 System.out.println("Error, Prefix property not found in properties file.");
+                return false;
             }
             else if (!properties.containsKey("VoiceCreateCategory"))
             {
                 System.out.println("Error, VoiceCreateCategory property not found in properties file.");
+                return false;
             }
-            else
-            {
-                new Bot(properties);
-            }
+            return true;
         }
+        return false;
     }
 
     /**
@@ -70,11 +86,17 @@ class Program
         return properties;
     }
 
+    /**
+     * Creates a properties file in the directory of the application
+     * @param properties object that stores the properties data
+     * @param file object that marks the location of the data
+     */
     private static void makeProperties(Properties properties, File file)
     {
-        properties.setProperty("Token", "");
-        properties.setProperty("Prefix", "");
-        properties.setProperty("VoiceCreateCategory", "");
+        if (properties.isEmpty())
+        {
+            prepairProperties(properties);
+        }
 
         try (OutputStream outputStream = new FileOutputStream(file))
         {
@@ -84,5 +106,16 @@ class Program
             System.out.println("Please provide it with the requested options before running the program again.");
         }
         catch (IOException ignored) { }
+    }
+
+    /**
+     * Prepaires the properties key values
+     * @param properties object where key values will be stored
+     */
+    private static void prepairProperties(Properties properties)
+    {
+        properties.setProperty("Token", "");
+        properties.setProperty("Prefix", "");
+        properties.setProperty("VoiceCreateCategory", "");
     }
 }

@@ -45,7 +45,7 @@ public class CommandManager extends ListenerAdapter
 
         try
         {
-            ICommand executableCommand = null;
+            ICommand executableCommand;
             Commands command = Commands.valueOf(stringCommand.substring(1).toUpperCase());
 
             switch (command)
@@ -57,7 +57,7 @@ public class CommandManager extends ListenerAdapter
                     executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
                     break;
                 default:
-                    break;
+                    return;
             }
 
             new Thread(executableCommand).start();

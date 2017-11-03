@@ -42,14 +42,7 @@ public class MakeChannelCommand implements ICommand
                     return;
                 }
 
-                for (Category category : categories)
-                {
-                    if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
-                    {
-                        category.createVoiceChannel(joinArray(command, 1, " ")).queue();
-                        break;
-                    }
-                }
+                createVoiceChannelInCategory(categories, joinArray(command, 1, " "));
             }
             else
             {
@@ -63,6 +56,28 @@ public class MakeChannelCommand implements ICommand
         }
     }
 
+    /**
+     * Searches for category in list and creates a voice channel in it
+     * @param categories list of categories
+     * @param channelName name of to be created channel
+     */
+    private void createVoiceChannelInCategory(List<Category> categories, String channelName)
+    {
+        for (Category category : categories)
+        {
+            if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
+            {
+                category.createVoiceChannel(channelName).queue();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Sends an error message to the message sender
+     * @param message the message that originally got send
+     * @param errormessage the message that will be send back in reply
+     */
     private void errormention(Message message, String errormessage)
     {
         String authorMention = message.getAuthor().getAsMention();
@@ -72,8 +87,10 @@ public class MakeChannelCommand implements ICommand
 
     /**
      * Joins an array with with spaces in between
+     * @param array values that need to get put in a single line after eachother
      * @param skip x number of values
-     * @return a string that
+     * @param insert a value that separates the elements in the single line
+     * @return a string that exists of all elements of the array in a line.
      */
     private String joinArray(String[] array, int skip, String insert)
     {

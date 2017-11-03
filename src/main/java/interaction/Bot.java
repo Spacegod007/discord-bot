@@ -28,7 +28,7 @@ public class Bot extends ListenerAdapter
             Presence me = api.getPresence();
             me.setGame(Game.of("my program"));
 
-            //Events
+            //Hook event listeners
             api.addEventListener(new GuildManager(api.getGuilds(), properties));
             api.addEventListener(new CommandManager(properties));
 

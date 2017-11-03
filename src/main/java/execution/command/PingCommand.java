@@ -26,14 +26,26 @@ public class PingCommand implements ICommand
         Message message = event.getMessage();
         message.delete().submit(false);
 
+        EmbedBuilder embeddedMessage = createEmbeddedMessage(message.getAuthor().getName());
+
+        event.getChannel().sendMessage(embeddedMessage.build()).queue();
+    }
+
+    /**
+     * Creates an embedded message
+     * @param authorName The name of the sender of the command
+     * @return a prebuilded version of the embeddedmessage
+     */
+    private EmbedBuilder createEmbeddedMessage(String authorName)
+    {
         String lineSeparator = System.getProperties().getProperty("line.separator");
 
-        String text = MessageFormat.format("Pong!{0}{1},{0}Your ping is: {2}ms", lineSeparator, message.getAuthor().getName(), event.getJDA().getPing());
+        String text = MessageFormat.format("Pong!{0}{1},{0}Your ping is: {2}ms", lineSeparator, authorName, event.getJDA().getPing());
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.CYAN);
         embedBuilder.setDescription(text);
 
-        event.getChannel().sendMessage(embedBuilder.build()).queue();
+        return embedBuilder;
     }
 }

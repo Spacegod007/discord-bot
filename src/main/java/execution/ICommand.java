@@ -1,7 +1,7 @@
 package execution;
 
 /**
- * An interface that all commands implement
+ * An interface that marks a class as a command
  */
 public interface ICommand extends Runnable
 {

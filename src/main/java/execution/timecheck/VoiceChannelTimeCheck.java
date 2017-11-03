@@ -24,7 +24,7 @@ public class VoiceChannelTimeCheck extends TimerTask
 
         List<Category> guildCategories = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
-        if (guildCategories.size() != 1)
+        if (guildCategories.size() < 1)
         {
             TextChannel defaultChannel = guild.getDefaultChannel();
 
@@ -40,22 +40,46 @@ public class VoiceChannelTimeCheck extends TimerTask
     @Override
     public void run()
     {
+        //get category where channels exists (should only return one value)
         List<Category> voiceChannelCategory = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
         for (Category voiceCategory : voiceChannelCategory)
         {
-            List<VoiceChannel> voiceChannels = voiceCategory.getVoiceChannels();
-
-            for (VoiceChannel voiceChannel : voiceChannels)
-            {
-                if (voiceChannel.getMembers().isEmpty() && hasOneMinutePassedSince(voiceChannel.getCreationTime()))
-                {
-                    voiceChannel.delete().queue();
-                }
-            }
+            checkVoiceChannels(voiceCategory.getVoiceChannels());
         }
     }
 
+    /**
+     * Checks all voicechannels for members and if it exists for more than one minute
+     * @param voiceChannels all voicechannels that need to be checked
+     */
+    private void checkVoiceChannels(List<VoiceChannel> voiceChannels)
+    {
+        //get voice channels which will be checked
+        for (VoiceChannel voiceChannel : voiceChannels)
+        {
+            checkVoiceChannel(voiceChannel);
+        }
+    }
+
+    /**
+     * Checks one voicechannel for members and if it exists for more than one minute
+     * @param voiceChannel that needs to be checked
+     */
+    private void checkVoiceChannel(VoiceChannel voiceChannel)
+    {
+        //check if the channel has any members and if it exists longer than one minute
+        if (voiceChannel.getMembers().isEmpty() && hasOneMinutePassedSince(voiceChannel.getCreationTime()))
+        {
+            voiceChannel.delete().queue();
+        }
+    }
+
+    /**
+     * checks if one minute has passed since given time
+     * @param origin the moment since when one minute must have passed for this method to return true
+     * @return returns true if one minute has passed, returns false if one minute hasn't passed yet
+     */
     private boolean hasOneMinutePassedSince(OffsetDateTime origin)
     {
         return (OffsetDateTime.now().toEpochSecond() - origin.toEpochSecond()) > 60;
