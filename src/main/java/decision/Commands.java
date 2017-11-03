@@ -11,7 +11,17 @@ public enum Commands
     PING,
 
     /**
-     * A commmand that makes a channel in the specified location
+     * A command that makes a channel in the specified location
      */
-    MAKECHANNEL
+    MAKECHANNEL,
+
+    /**
+     * A command that searches on google for websites
+     */
+    SEARCH,
+
+    /**
+     * A command that searches on youtube for movies
+     */
+    SEARCHYT
 }
