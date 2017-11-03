@@ -38,8 +38,11 @@ public class GuildManager extends ListenerAdapter
     @Override
     public void onGuildJoin(GuildJoinEvent event)
     {
+        Guild guild = event.getGuild();
+
+
         //add channeltimer for new server
-        addVoiceChannelTimerCheck(event.getGuild());
+        addVoiceChannelTimerCheck(guild);
         super.onGuildJoin(event);
     }
 
@@ -65,6 +68,7 @@ public class GuildManager extends ListenerAdapter
 
     private void removeVoiceChannelTimerCheck(Guild guild)
     {
-        timers.remove(guild.getName());
+        Timer timer = (Timer) timers.remove(guild.getName());
+        timer.cancel();
     }
 }
