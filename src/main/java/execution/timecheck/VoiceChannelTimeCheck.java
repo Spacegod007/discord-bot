@@ -14,13 +14,13 @@ import java.util.TimerTask;
  */
 public class VoiceChannelTimeCheck extends TimerTask
 {
-    private final String autoVoiceChannelCategoryName;
+    private final String voiceChannelCategoryName;
     private final Guild guild;
 
     public VoiceChannelTimeCheck(Guild guild, String autoVoiceChannelCategoryName)
     {
         this.guild = guild;
-        this.autoVoiceChannelCategoryName = autoVoiceChannelCategoryName;
+        voiceChannelCategoryName = autoVoiceChannelCategoryName;
 
         List<Category> guildCategories = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
@@ -41,7 +41,7 @@ public class VoiceChannelTimeCheck extends TimerTask
     public void run()
     {
         //get category where channels exists (should only return one value)
-        List<Category> voiceChannelCategory = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
+        List<Category> voiceChannelCategory = guild.getCategoriesByName(voiceChannelCategoryName, true);
 
         for (Category voiceCategory : voiceChannelCategory)
         {

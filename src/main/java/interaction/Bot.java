@@ -5,6 +5,7 @@ import decision.GuildManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -18,25 +19,37 @@ import java.util.Properties;
  */
 public class Bot extends ListenerAdapter
 {
+    private JDA jda;
+    private Properties properties;
+
     public Bot(Properties properties)
     {
+        this.properties = properties;
         String token = properties.getProperty("Token");
         try
         {
-            JDA api = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
-            Presence me = api.getPresence();
+            jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
+            Presence me = jda.getPresence();
+
+            //set status to busy while loading
+            me.setStatus(OnlineStatus.DO_NOT_DISTURB);
 
             me.setGame(Game.of(properties.getProperty("Playing")));
+            addEventListeners();
 
-            //Hook event listeners
-            api.addEventListener(new GuildManager(api.getGuilds(), properties));
-            api.addEventListener(new CommandManager(properties));
-
+            //set status to online when done loading
+            me.setStatus(OnlineStatus.ONLINE);
         }
         catch (LoginException | InterruptedException | RateLimitedException e)
         {
             e.printStackTrace();
             System.exit(-1);
         }
+    }
+
+    private void addEventListeners()
+    {
+        jda.addEventListener(new GuildManager(jda.getGuilds(), properties));
+        jda.addEventListener(new CommandManager(properties));
     }
 }

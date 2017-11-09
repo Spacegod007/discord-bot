@@ -1,9 +1,9 @@
 package decision;
 
 import execution.*;
+import execution.command.HelpCommand;
 import execution.command.MakeChannelCommand;
 import execution.command.PingCommand;
-import execution.command.SearchGoogleCommand;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -57,8 +57,8 @@ public class CommandManager extends ListenerAdapter
                 case MAKECHANNEL:
                     executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
                     break;
-                case SEARCH:
-                    executableCommand = new SearchGoogleCommand(event);
+                case HELP:
+                    executableCommand = new HelpCommand(event);
                     break;
                 default:
                     return;

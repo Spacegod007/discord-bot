@@ -15,7 +15,7 @@ public class GuildManager extends ListenerAdapter
 {
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Map timers;
-    private final String autoVoiceChannelCategoryName;
+    private final String voiceChannelCategoryName;
 
     /**
      * Manages all automated guild interactions
@@ -24,7 +24,7 @@ public class GuildManager extends ListenerAdapter
      */
     public GuildManager(List<Guild> guilds, Properties properties)
     {
-        autoVoiceChannelCategoryName = properties.getProperty("VoiceCreateCategory");
+        voiceChannelCategoryName = properties.getProperty("VoiceCreateCategory");
 
         timers = new HashMap<String, Timer>();
 
@@ -61,7 +61,7 @@ public class GuildManager extends ListenerAdapter
     private void addVoiceChannelTimerCheck(Guild guild)
     {
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new VoiceChannelTimeCheck(guild, autoVoiceChannelCategoryName),0, 2000);
+        timer.scheduleAtFixedRate(new VoiceChannelTimeCheck(guild, voiceChannelCategoryName),0, 2000);
         //noinspection unchecked
         timers.put(guild.getName(), timer);
     }
