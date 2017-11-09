@@ -25,7 +25,7 @@ public class Bot extends ListenerAdapter
     public Bot(Properties properties)
     {
         this.properties = properties;
-        String token = properties.getProperty("Token");
+        String token = properties.getProperty("DiscordToken");
         try
         {
             jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();

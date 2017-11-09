@@ -36,7 +36,7 @@ class Program
     {
         if (properties != null)
         {
-            if (!properties.containsKey("Token"))
+            if (!properties.containsKey("DiscordToken"))
             {
                 System.out.println("Error, token property not found in properties file.");
                 return false;
@@ -119,7 +119,7 @@ class Program
      */
     private static void prepairProperties(Properties properties)
     {
-        properties.setProperty("Token", "");
+        properties.setProperty("DiscordToken", "");
         properties.setProperty("Prefix", "");
         properties.setProperty("VoiceCreateCategory", "");
         properties.setProperty("Playing", "");
