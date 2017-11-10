@@ -58,7 +58,7 @@ public class CommandManager extends ListenerAdapter
                     executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
                     break;
                 case HELP:
-                    executableCommand = new HelpCommand(event);
+                    executableCommand = new HelpCommand(event, prefix);
                     break;
                 default:
                     return;
