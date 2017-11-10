@@ -79,12 +79,20 @@ class Program
             System.out.println("Error, Properties file not found");
             System.out.println("Creating properties file automatically");
 
-            makeProperties(properties, file);
-
+            try
+            {
+                makeEmptyProperties(properties, file);
+            }
+            catch (IOException e1)
+            {
+                System.out.println("Error, something went wrong while creating a new properties file");
+                e.printStackTrace();
+            }
             return null;
         }
         catch (IOException e)
         {
+            System.out.println("Error, something went wrong while reading the properties file");
             e.printStackTrace();
         }
 
@@ -96,7 +104,7 @@ class Program
      * @param properties object that stores the properties data
      * @param file object that marks the location of the data
      */
-    private static void makeProperties(Properties properties, File file)
+    private static void makeEmptyProperties(Properties properties, File file) throws IOException
     {
         if (properties.isEmpty())
         {
@@ -110,7 +118,6 @@ class Program
             System.out.println("Properties file located at:" + System.getProperties().getProperty("line.separator") + file.getPath());
             System.out.println("Please provide it with the requested options before running the program again.");
         }
-        catch (IOException ignored) { }
     }
 
     /**
