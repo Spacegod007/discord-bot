@@ -65,8 +65,15 @@ public class MakeChannelCommand implements ICommand
      */
     private void makeChannelFromAuthorGame(Message message)
     {
-        Game game = message.getGuild().getMember(message.getAuthor()).getGame();
-        createVoiceChannelInCategory(message, game.getName());
+        try
+        {
+            Game game = message.getGuild().getMember(message.getAuthor()).getGame();
+            createVoiceChannelInCategory(message, game.getName());
+        }
+        catch (NullPointerException e)
+        {
+            message.getChannel().sendMessage( String.format("%s, according to Discord you're not playing anything. Did you mean -name?", message.getAuthor().getAsMention()));
+        }
     }
 
     /**
