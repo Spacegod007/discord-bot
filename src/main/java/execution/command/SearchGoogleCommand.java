@@ -17,12 +17,12 @@ public class SearchGoogleCommand implements ICommand
     @Override
     public void run()
     {
-        message.delete().submit();
+        message.delete().submit(false);
         String[] command = message.getContent().split(" ");
         String query = StringHelper.joinArray(command, 1, " ");
 
         //TODO remove next statement
-        message.getChannel().sendMessage("Will be implemented shortly!");
+        message.getChannel().sendMessage("Will be implemented shortly!").queue();
 
         printResults(searchGoogle(query));
     }
