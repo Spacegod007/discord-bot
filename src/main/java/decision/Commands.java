@@ -2,7 +2,6 @@ package decision;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,21 +12,21 @@ public enum Commands
     /**
      * A command that shows the ping to the server
      */
-    PING(new ArrayList<>(Collections.singletonList(
+    PING("A command that shows the ping to the server",
             new CommandArgument("-TIME", "changes the type of time notation")
-    )), "A command that shows the ping to the server"),
+    ),
 
     /**
      * A command that makes a channel in the specified location
      */
-    MAKECHANNEL(new ArrayList<>(Arrays.asList(
+    MAKECHANNEL("command that makes a channel in the specified location",
             new CommandArgument("-GAME", "instead of specifying the channel name, the game the person is currently playing will be used, if the person isn't playing any game an error message will be shown"),
             new CommandArgument("-NAME", "instead of specifying the channel name, the person his/her name will be used as channelname 'Person's channel'")
-    )), "command that makes a channel in the specified location"),
+    ),
 
-    HELP(new ArrayList<>(Collections.singletonList(
+    HELP("A command that shows the information about all commands",
             new CommandArgument("-COMMAND", "specifies a specific command to request the help from")
-    )), "A command that shows the information about all commands");
+    );
 
     /**
      * Contains a list of arguments for each command
@@ -41,12 +40,12 @@ public enum Commands
 
     /**
      * A command that can be executed by this bot
-     * @param arguments that can be used for this command
      * @param description of what the command does
+     * @param arguments that can be used for this command
      */
-    Commands(List<CommandArgument> arguments, String description)
+    Commands(String description, CommandArgument ... arguments)
     {
-        this.arguments = arguments;
+        this.arguments = Arrays.asList(arguments);
         this.description = description;
     }
 

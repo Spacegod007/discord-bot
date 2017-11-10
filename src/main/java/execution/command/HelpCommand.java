@@ -7,8 +7,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A command that shows the information about all commands
@@ -75,6 +73,11 @@ public class HelpCommand implements ICommand
         message.getChannel().sendMessage(embedBuilder.build()).queue();
     }
 
+    /**
+     * checks if the command is equal to a value in the Commands enumeration
+     * @param command which is supposed to be equal to a command in the Commands enumeration
+     * @return true if the command parameter is equal to a Command, false if it isn't equal
+     */
     private boolean isACommand(String command)
     {
         for (Commands commandOption : Commands.values())
@@ -87,6 +90,10 @@ public class HelpCommand implements ICommand
         return  false;
     }
 
+    /**
+     * Gets a string containing the full help of all commands
+     * @return a string containing the full help of all commands
+     */
     private String getAllCommandsHelp()
     {
         StringBuilder printable = new StringBuilder();
@@ -99,6 +106,11 @@ public class HelpCommand implements ICommand
         return printable.toString();
     }
 
+    /**
+     * Gets a string containing the help of a specific command
+     * @param command of which the help needs to be obtained
+     * @return the help of the specified command
+     */
     private String getSpecifiedCommandHelp(Commands command)
     {
         return command.toString();
