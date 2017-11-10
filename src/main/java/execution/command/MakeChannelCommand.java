@@ -60,7 +60,7 @@ public class MakeChannelCommand implements ICommand
     }
 
     /**
-     * Gets the game the author is playing and creates a channel using the game name
+     * Gets the game the author is playing and
      * @param message that triggered this command
      */
     private void makeChannelFromAuthorGame(Message message)
@@ -75,14 +75,14 @@ public class MakeChannelCommand implements ICommand
      */
     private void makeChannelFromAuthorName(Message message)
     {
-        String channelName = new StringBuilder().append(message.getAuthor().getName()).append("'s channel").toString();
+        String channelName = String.format("%s's channel", message.getAuthor().getName());
         createVoiceChannelInCategory(message, channelName);
     }
 
     /**
-     * Makes a channel with the remaining arguments of the message
-     * @param message the message that triggered this command
-     * @param command the contents of the message split on spaces
+     * Makes a channel using the given parameters
+     * @param message that triggered this command
+     * @param command which contains the channel name
      */
     private void makeChannelFromGivenName(Message message, String[] command)
     {
@@ -91,7 +91,7 @@ public class MakeChannelCommand implements ICommand
 
     /**
      * Searches for category in list and creates a voice channel in it
-     * @param message the message that triggered this command
+     * @param message that was originally send
      * @param channelName name of to be created channel
      */
     private void createVoiceChannelInCategory(Message message, String channelName)
