@@ -36,6 +36,7 @@ public class HelpCommand implements ICommand
         String printable;
 
         try{
+            //check if argument equals "-COMMAND"
             if (command[1].equalsIgnoreCase(Commands.HELP.getArguments().get(0)))
             {
                 embedBuilder.setTitle("Here's a description of the specified command");

@@ -1,8 +1,8 @@
 package execution.command;
 
+import decision.Commands;
 import execution.ICommand;
-import net.dv8tion.jda.core.entities.Category;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import toolbox.StringHelper;
 
@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class MakeChannelCommand implements ICommand
 {
-
     private final GuildMessageReceivedEvent event;
     private final String autoVoiceChannelCategoryName;
 
@@ -33,17 +32,20 @@ public class MakeChannelCommand implements ICommand
 
         if (command.length > 1)
         {
-            if (command[1].length() > 1)
+            //check if argument equals "-NAME"
+            if (command[1].equalsIgnoreCase(Commands.MAKECHANNEL.getArguments().get(1)))
             {
-                List<Category> categories = event.getGuild().getCategories();
-
-                if (categories == null)
-                {
-                    errormention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
-                    return;
-                }
-
-                createVoiceChannelInCategory(categories, StringHelper.joinArray(command, 1, " "));
+                makeChannelFromAuthorName(message);
+            }
+            //check if argument equals "-GAME"
+            else if (command[1].equalsIgnoreCase(Commands.MAKECHANNEL.getArguments().get(0)))
+            {
+                makeChannelFromAuthorGame(message);
+            }
+            //check if argument is a channel name
+            else if (command[1].length() > 1)
+            {
+                makeChannelFromGivenName(message, command);
             }
             else
             {
@@ -58,12 +60,50 @@ public class MakeChannelCommand implements ICommand
     }
 
     /**
+     * Gets the game the author is playing and creates a channel using the game name
+     * @param message that triggered this command
+     */
+    private void makeChannelFromAuthorGame(Message message)
+    {
+        Game game = message.getGuild().getMember(message.getAuthor()).getGame();
+        createVoiceChannelInCategory(message, game.getName());
+    }
+
+    /**
+     * Gets the author name from the message and creates a channel using that name
+     * @param message that triggered this command
+     */
+    private void makeChannelFromAuthorName(Message message)
+    {
+        String channelName = new StringBuilder().append(message.getAuthor().getName()).append("'s channel").toString();
+        createVoiceChannelInCategory(message, channelName);
+    }
+
+    /**
+     * Makes a channel with the remaining arguments of the message
+     * @param message the message that triggered this command
+     * @param command the contents of the message split on spaces
+     */
+    private void makeChannelFromGivenName(Message message, String[] command)
+    {
+        createVoiceChannelInCategory(message, StringHelper.joinArray(command, 1, " "));
+    }
+
+    /**
      * Searches for category in list and creates a voice channel in it
-     * @param categories list of categories
+     * @param message the message that triggered this command
      * @param channelName name of to be created channel
      */
-    private void createVoiceChannelInCategory(List<Category> categories, String channelName)
+    private void createVoiceChannelInCategory(Message message, String channelName)
     {
+        List<Category> categories = event.getGuild().getCategories();
+
+        if (categories == null)
+        {
+            errormention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
+            return;
+        }
+
         for (Category category : categories)
         {
             if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
