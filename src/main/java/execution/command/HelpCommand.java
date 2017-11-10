@@ -14,10 +14,12 @@ import java.awt.*;
 public class HelpCommand implements ICommand
 {
     private final GuildMessageReceivedEvent event;
+    private final String prefix;
 
-    public HelpCommand(GuildMessageReceivedEvent event)
+    public HelpCommand(GuildMessageReceivedEvent event, String prefix)
     {
         this.event = event;
+        this.prefix = prefix;
     }
 
     @Override
@@ -97,6 +99,8 @@ public class HelpCommand implements ICommand
     private String getAllCommandsHelp()
     {
         StringBuilder printable = new StringBuilder();
+
+        printable.append(String.format("To initiate any command type: \"%s\" in front of the command%n%n", prefix));
 
         for(Commands command : Commands.values())
         {
