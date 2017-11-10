@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A command that shows the information about all commands
@@ -39,6 +41,11 @@ public class HelpCommand implements ICommand
                 embedBuilder.setTitle("Here's a description of the specified command");
                 printable = getSpecifiedCommandHelp(Commands.valueOf(command[2].toUpperCase()));
             }
+            else if (isACommand(command[1]))
+            {
+                embedBuilder.setTitle("Here's a description of the specified command");
+                printable = getSpecifiedCommandHelp(Commands.valueOf(command[1].toUpperCase()));
+            }
             else
             {
                 embedBuilder.setTitle("Here are commands I recognise with some arguments which alter their behaviour");
@@ -65,6 +72,18 @@ public class HelpCommand implements ICommand
         embedBuilder.setDescription(printable);
 
         message.getChannel().sendMessage(embedBuilder.build()).queue();
+    }
+
+    private boolean isACommand(String command)
+    {
+        for (Commands commandOption : Commands.values())
+        {
+            if (commandOption.name().equalsIgnoreCase(command))
+            {
+                return true;
+            }
+        }
+        return  false;
     }
 
     private String getAllCommandsHelp()
