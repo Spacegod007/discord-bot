@@ -19,9 +19,20 @@ import java.util.Properties;
  */
 public class Bot extends ListenerAdapter
 {
+    /**
+     * The JDA which is the main point of interaction for the bot to the library
+     */
     private JDA jda;
+
+    /**
+     * The properties the bot uses
+     */
     private Properties properties;
 
+    /**
+     * Constructs a bot object which manages the interactions
+     * @param properties containing the properties which the bot needs to operate
+     */
     public Bot(Properties properties)
     {
         this.properties = properties;
@@ -31,13 +42,10 @@ public class Bot extends ListenerAdapter
             jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
             Presence me = jda.getPresence();
 
-            //set status to busy while loading
-            me.setStatus(OnlineStatus.DO_NOT_DISTURB);
-
-            me.setGame(Game.of(properties.getProperty("Playing")));
+            setPresenceValues(me);
             addEventListeners();
 
-            //set status to online when done loading
+            //set status to online to mark that the bot is done loading
             me.setStatus(OnlineStatus.ONLINE);
         }
         catch (LoginException | InterruptedException | RateLimitedException e)
@@ -47,9 +55,27 @@ public class Bot extends ListenerAdapter
         }
     }
 
+    /**
+     * Sets default values of the bot presence
+     * @param me is the presence of the bot itself
+     */
+    private void setPresenceValues(Presence me)
+    {
+        //set status to busy while loading
+        me.setStatus(OnlineStatus.DO_NOT_DISTURB);
+
+        //sets the game the bot is "playing"
+        me.setGame(Game.of(properties.getProperty("Playing")));
+    }
+
+    /**
+     * Adds event listeners to the bot
+     */
     private void addEventListeners()
     {
-        jda.addEventListener(new GuildManager(jda.getGuilds(), properties));
-        jda.addEventListener(new CommandManager(properties));
+        jda.addEventListener(
+                new GuildManager(jda.getGuilds(), properties),
+                new CommandManager(properties)
+        );
     }
 }
