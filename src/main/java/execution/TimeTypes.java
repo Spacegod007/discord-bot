@@ -43,7 +43,7 @@ public enum TimeTypes
      */
     NANOSECOND("NS", "NSEC");
 
-    private List<String> shortVersions;
+    private final List<String> shortVersions;
 
     TimeTypes(String ... shortVersions)
     {

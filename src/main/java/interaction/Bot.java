@@ -27,7 +27,7 @@ public class Bot extends ListenerAdapter
     /**
      * The properties the bot uses
      */
-    private Properties properties;
+    private final Properties properties;
 
     /**
      * Constructs a bot object which manages the interactions

@@ -13,7 +13,6 @@ import java.util.*;
  */
 public class GuildManager extends ListenerAdapter
 {
-    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Map timers;
     private final String voiceChannelCategoryName;
 
