@@ -10,6 +10,13 @@ import java.util.List;
 public enum Commands
 {
     /**
+     * A command that shows all commands there are
+     */
+    HELP("A command that shows the information about all commands",
+            new CommandArgument("-COMMAND", "specifies a specific command to request the help from")
+    ),
+
+    /**
      * A command that shows the ping to the server
      */
     PING("A command that shows the ping to the server",
@@ -19,13 +26,12 @@ public enum Commands
     /**
      * A command that makes a channel in the specified location
      */
-    MAKECHANNEL("command that makes a channel in the specified location",
+    MAKECHANNEL("A command that makes a channel in the specified location",
             new CommandArgument("-GAME", "instead of specifying the channel name, the game the person is currently playing will be used, if the person isn't playing any game an error message will be shown"),
             new CommandArgument("-NAME", "instead of specifying the channel name, the person his/her name will be used as channelname 'Person's channel'")
     ),
 
-    HELP("A command that shows the information about all commands",
-            new CommandArgument("-COMMAND", "specifies a specific command to request the help from")
+    CLEARCHAT("A command which supposedly clears a specified channel"
     );
 
     /**

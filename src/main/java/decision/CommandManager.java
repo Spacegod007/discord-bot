@@ -1,6 +1,7 @@
 package decision;
 
 import execution.*;
+import execution.command.ClearChatCommand;
 import execution.command.HelpCommand;
 import execution.command.MakeChannelCommand;
 import execution.command.PingCommand;
@@ -59,6 +60,9 @@ public class CommandManager extends ListenerAdapter
                     break;
                 case HELP:
                     executableCommand = new HelpCommand(event, prefix);
+                    break;
+                case CLEARCHAT:
+                    executableCommand = new ClearChatCommand(event);
                     break;
                 default:
                     return;
