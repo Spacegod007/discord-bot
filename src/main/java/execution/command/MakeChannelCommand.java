@@ -72,7 +72,7 @@ public class MakeChannelCommand implements ICommand
         }
         catch (NullPointerException e)
         {
-            message.getChannel().sendMessage( String.format("%s, according to Discord you're not playing anything. Did you mean -name?", message.getAuthor().getAsMention()));
+            message.getChannel().sendMessage( String.format("%s, according to Discord you're not playing anything. Did you mean -name?", message.getAuthor().getAsMention())).queue();
         }
     }
 
