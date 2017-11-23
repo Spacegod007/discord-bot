@@ -24,7 +24,7 @@ public class VoiceChannelTimeCheck extends TimerTask
 
         List<Category> guildCategories = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
-        if (guildCategories.size() < 1)
+        if (guildCategories.isEmpty())
         {
             TextChannel defaultChannel = guild.getDefaultChannel();
 

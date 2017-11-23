@@ -2,6 +2,9 @@ package toolbox;
 
 public class StringHelper
 {
+    private StringHelper()
+    { }
+
     /**
      * Joins an array with with spaces in between
      * @param array values that need to get put in a single line after eachother
