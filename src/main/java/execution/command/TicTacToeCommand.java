@@ -41,6 +41,7 @@ public class TicTacToeCommand implements ICommand, ICountDownExecution
     @Override
     public void run()
     {
+        event.getMessage().delete().submit(false);
         int countdownFrom = 3;
 
         new CountDown(countdownFrom, event.getChannel(), this);

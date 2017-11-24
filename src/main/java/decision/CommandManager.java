@@ -1,11 +1,7 @@
 package decision;
 
 import execution.ICommand;
-import execution.command.ClearChatCommand;
-import execution.command.HelpCommand;
-import execution.command.MakeChannelCommand;
-import execution.command.PingCommand;
-import execution.command.TicTacToeCommand;
+import execution.command.*;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -67,6 +63,9 @@ public class CommandManager extends ListenerAdapter
                     break;
                 case TICTACTOE:
                     executableCommand = new TicTacToeCommand(event);
+                    break;
+                case COUNTDOWN:
+                    executableCommand = new CountDownCommand(event);
                     break;
                 default:
                     return;

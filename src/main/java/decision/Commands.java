@@ -31,7 +31,17 @@ public enum Commands
             new CommandArgument("-NAME", "instead of specifying the channel name, the person his/her name will be used as channelname 'Person's channel'")
     ),
 
+    /**
+     * A command to play a game of tic tac toe
+     */
     TICTACTOE("A game of tic tac toe played in the current channel"
+    ),
+
+    /**
+     * A command to start a countdown from a specified number
+     */
+    COUNTDOWN("A command to countdown from a specified number",
+            new CommandArgument("[number]", "from what number the countdown needs to start")
     ),
 
     CLEARCHAT("A command which supposedly clears a specified channel"

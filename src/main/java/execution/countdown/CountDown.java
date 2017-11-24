@@ -40,18 +40,26 @@ public class CountDown extends TimerTask
      * The constructor of the countdown class
      * @param from what number needs to be count downwards
      * @param channel where messages need to be send to
+     */
+    public CountDown(int from, TextChannel channel)
+    {
+        this.count = from;
+        this.channel = channel;
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(this, 1000, 1000);
+    }
+
+    /**
+     * The constructor of the countdown class
+     * @param from what number needs to be count downwards
+     * @param channel where messages need to be send to
      * @param countDownExecution class where the executeAfterCountDown method needs to be triggered
      */
     public CountDown(int from, TextChannel channel, ICountDownExecution countDownExecution)
     {
-        this.count = from;
-        this.channel = channel;
+        this(from, channel);
         this.countDownExecution = countDownExecution;
-
-        timer = new Timer();
-
-        timer.scheduleAtFixedRate(this, 1000, 1000);
-
     }
 
     /**
@@ -60,18 +68,26 @@ public class CountDown extends TimerTask
     @Override
     public void run()
     {
+        //checks if timer is done
         if (count == 0)
         {
             timer.cancel();
 
+            //checks if a method needs to be triggered when the timer is done
             if (countDownExecution != null)
             {
                 countDownExecution.executeAfterCountDown(lastSendMessage);
             }
+            else
+            {
+                lastSendMessage.editMessage("Go!").queue();
+            }
         }
+        //checks if timer is still running
         else if (count > 0)
         {
             printCountdown();
+            count--;
         }
     }
 
@@ -88,6 +104,5 @@ public class CountDown extends TimerTask
         {
             lastSendMessage = channel.sendMessage(String.format("%s...", count)).complete();
         }
-        count--;
     }
 }
