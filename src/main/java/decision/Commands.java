@@ -30,12 +30,14 @@ public enum Commands
             new CommandArgument("-GAME", "instead of specifying the channel name, the game the person is currently playing will be used, if the person isn't playing any game an error message will be shown"),
             new CommandArgument("-NAME", "instead of specifying the channel name, the person his/her name will be used as channelname 'Person's channel'")
     ),
+    MKC("Short for \"MakeChannel\""),
 
     /**
-     * A command to play a game of tic tac toe
+     * A command to play a game of rock paper scissors
      */
-    TICTACTOE("A game of tic tac toe played in the current channel"
+    ROCKPAPERSCISSORS("A game of tic tac toe played in the current channel"
     ),
+    RPC("Short for \"Rock Paper Scissors\""),
 
     /**
      * A command to start a countdown from a specified number
@@ -44,7 +46,10 @@ public enum Commands
             new CommandArgument("[number]", "from what number the countdown needs to start")
     ),
 
-    CLEARCHAT("A command which supposedly clears a specified channel"
+    /**
+     * A command which supposedly clears the chat in the current channel
+     */
+    CLEARCHAT("A command which supposedly clears the chat in the current channel"
     );
 
     /**
@@ -113,7 +118,7 @@ public enum Commands
     @Override
     public String toString()
     {
-        StringBuilder returnable = new StringBuilder(String.format("%s:%n", super.toString()));
+        StringBuilder returnable = new StringBuilder(String.format("%s:%n%s%n", super.toString(), description));
         for (CommandArgument argument : arguments)
         {
             returnable.append(String.format("%s%n", argument.toString()));

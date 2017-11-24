@@ -9,9 +9,9 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import java.util.Random;
 
 /**
- * A game of tic tac toe
+ * A game of Rock paper scissors
  */
-public class TicTacToeCommand implements ICommand, ICountDownExecution
+public class RockPaperScissorsCommand implements ICommand, ICountDownExecution
 {
 
     /**
@@ -25,10 +25,10 @@ public class TicTacToeCommand implements ICommand, ICountDownExecution
     private final Random random;
 
     /**
-     * The constructor of the tic tac toe command
+     * The constructor of the rock paper scissors command
      * @param event which triggered this command
      */
-    public TicTacToeCommand(GuildMessageReceivedEvent event)
+    public RockPaperScissorsCommand(GuildMessageReceivedEvent event)
     {
         this.event = event;
 
@@ -63,27 +63,27 @@ public class TicTacToeCommand implements ICommand, ICountDownExecution
      * @param lastSendMessage which will be edited to show the chosen option
      * @param option that was chosen and needs to be printed
      */
-    private void printOption(Message lastSendMessage, TicTacToeOptions option)
+    private void printOption(Message lastSendMessage, RockPaperScissorsOptions option)
     {
         lastSendMessage.editMessage(String.format("I choose %s", option)).queue();
     }
 
     /**
      * Generates which option is picked
-     * @return A TicTacToeOptions option containing the chosen option
+     * @return A RockPaperScissorsOptions option containing the chosen option
      */
-    private TicTacToeOptions generateOption()
+    private RockPaperScissorsOptions generateOption()
     {
-        int randomNumber = random.nextInt(3 - 1 + 1) + 1;
+        int randomNumber = random.nextInt(3) + 1;
 
         switch (randomNumber)
         {
             case 1:
-                return TicTacToeOptions.ROCK;
+                return RockPaperScissorsOptions.ROCK;
             case 2:
-                return TicTacToeOptions.PAPER;
+                return RockPaperScissorsOptions.PAPER;
             default:
-                return TicTacToeOptions.SCISSORS;
+                return RockPaperScissorsOptions.SCISSORS;
         }
     }
 }

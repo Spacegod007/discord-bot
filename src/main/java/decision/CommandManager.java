@@ -53,6 +53,7 @@ public class CommandManager extends ListenerAdapter
                     executableCommand = new PingCommand(event);
                     break;
                 case MAKECHANNEL:
+                case MKC:
                     executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
                     break;
                 case HELP:
@@ -61,8 +62,9 @@ public class CommandManager extends ListenerAdapter
                 case CLEARCHAT:
                     executableCommand = new ClearChatCommand(event);
                     break;
-                case TICTACTOE:
-                    executableCommand = new TicTacToeCommand(event);
+                case ROCKPAPERSCISSORS:
+                case RPC:
+                    executableCommand = new RockPaperScissorsCommand(event);
                     break;
                 case COUNTDOWN:
                     executableCommand = new CountDownCommand(event);
