@@ -46,6 +46,10 @@ public enum Commands
             new CommandArgument("[number]", "from what number the countdown needs to start")
     ),
 
+    WHOAREYOU("A command which tells you who this bot is"
+    ),
+    WAY("Short for \"Who Are You\""),
+
     /**
      * A command which supposedly clears the chat in the current channel
      */

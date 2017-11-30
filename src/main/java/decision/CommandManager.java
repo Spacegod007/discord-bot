@@ -37,7 +37,7 @@ public class CommandManager extends ListenerAdapter
 
         String stringCommand = message.getContent().split(" ")[0];
 
-        if (!stringCommand.startsWith(prefix))
+        if (!stringCommand.startsWith(prefix) || stringCommand.length() < 2)
         {
             return;
         }
@@ -68,6 +68,10 @@ public class CommandManager extends ListenerAdapter
                     break;
                 case COUNTDOWN:
                     executableCommand = new CountDownCommand(event);
+                    break;
+                case WHOAREYOU:
+                case WAY:
+                    executableCommand = new WhoAreYouCommand(event);
                     break;
                 default:
                     return;

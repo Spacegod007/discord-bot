@@ -17,7 +17,7 @@ import java.util.Properties;
 /**
  * Main bot class, manages entire bot
  */
-public class Bot extends ListenerAdapter
+public class Bot
 {
     /**
      * The JDA which is the main point of interaction for the bot to the library
