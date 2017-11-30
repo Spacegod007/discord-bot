@@ -74,8 +74,8 @@ public class Bot extends ListenerAdapter
     private void addEventListeners()
     {
         jda.addEventListener(
-                new GuildManager(jda.getGuilds(), properties),
-                new CommandManager(properties)
+                new CommandManager(properties),
+                new GuildManager(jda.getGuilds(), properties)
         );
     }
 }
