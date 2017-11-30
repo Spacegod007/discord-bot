@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class GuildManager extends ListenerAdapter
 {
-    private final Map timers;
+    private final Map<String, Timer> timers;
     private final String voiceChannelCategoryName;
 
     /**
@@ -72,6 +72,6 @@ public class GuildManager extends ListenerAdapter
     private void removeVoiceChannelTimerCheck(Guild guild)
     {
         //gets timer by guild name and cancels it afterwards
-        ((Timer) timers.remove(guild.getName())).cancel();
+        timers.remove(guild.getName()).cancel();
     }
 }
