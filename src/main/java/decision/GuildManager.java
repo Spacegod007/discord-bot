@@ -65,9 +65,13 @@ public class GuildManager extends ListenerAdapter
         timers.put(guild.getName(), timer);
     }
 
+    /**
+     * General method that removes a timer from the mapping of guild timers
+     * @param guild where the timer is dedicated to
+     */
     private void removeVoiceChannelTimerCheck(Guild guild)
     {
-        Timer timer = (Timer) timers.remove(guild.getName());
-        timer.cancel();
+        //gets timer by guild name and cancels it afterwards
+        ((Timer) timers.remove(guild.getName())).cancel();
     }
 }
