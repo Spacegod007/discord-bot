@@ -25,7 +25,7 @@ public class GuildManager extends ListenerAdapter
     {
         voiceChannelCategoryName = properties.getProperty("VoiceCreateCategory");
 
-        timers = new HashMap<String, Timer>();
+        timers = new HashMap<>();
 
         //make timers for existing guilds
         for (Guild guild : guilds)
