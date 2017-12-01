@@ -40,7 +40,7 @@ public class GuildManager extends ListenerAdapter
         Guild guild = event.getGuild();
 
 
-        //add channeltimer for new server
+        //add channel timer for new server
         addVoiceChannelTimerCheck(guild);
         super.onGuildJoin(event);
     }
@@ -48,7 +48,7 @@ public class GuildManager extends ListenerAdapter
     @Override
     public void onGuildLeave(GuildLeaveEvent event)
     {
-        //remove channeltimer for old server
+        //remove channel timer for old server
         removeVoiceChannelTimerCheck(event.getGuild());
         super.onGuildLeave(event);
     }

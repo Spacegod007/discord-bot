@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * An enumeration that lists all the available commands
  */
+@SuppressWarnings("SpellCheckingInspection")
 public enum Commands
 {
     /**
@@ -78,23 +79,6 @@ public enum Commands
     }
 
     /**
-     * Gets the description of a specified argument
-     * @param argumentName specifies of what argument the description needs to be returned
-     * @return the description of the argument or null if the command doesn't contain the specified argument
-     */
-    public String getArgumentDescription(String argumentName)
-    {
-        for (CommandArgument argument : arguments)
-        {
-            if (argument.getArgument().equalsIgnoreCase(argumentName))
-            {
-                return  argument.getDescription();
-            }
-        }
-        return null;
-    }
-
-    /**
      * Gets all command arguments as strings in a List
      * @return a list containing strings with all arguments for the specified command
      */
@@ -108,15 +92,6 @@ public enum Commands
         }
 
         return returnables;
-    }
-
-    /**
-     * Gets the description of the specified command
-     * @return a string containingthe description of the specified command
-     */
-    public String getDescription()
-    {
-        return description;
     }
 
     @Override
@@ -148,24 +123,6 @@ public enum Commands
         {
             this.argument = argument;
             this.description = description;
-        }
-
-        /**
-         * Gets the argument
-         * @return a string containing the argument
-         */
-        String getArgument()
-        {
-            return argument;
-        }
-
-        /**
-         * Gets the description of the argument
-         * @return a string containing the description of the argument
-         */
-        String getDescription()
-        {
-            return description;
         }
 
         @Override

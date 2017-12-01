@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * An enumeration which represents types of time units
  */
+@SuppressWarnings("ALL")
 public enum TimeTypes
 {
     NULL,

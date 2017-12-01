@@ -108,7 +108,7 @@ class Program
     {
         if (properties.isEmpty())
         {
-            prepairProperties(properties);
+            prepareProperties(properties);
         }
 
         try (OutputStream outputStream = new FileOutputStream(file))
@@ -121,10 +121,10 @@ class Program
     }
 
     /**
-     * Prepaires the properties key values
+     * Prepares the properties key values
      * @param properties object where key values will be stored
      */
-    private static void prepairProperties(Properties properties)
+    private static void prepareProperties(Properties properties)
     {
         properties.setProperty("DiscordToken", "");
         properties.setProperty("Prefix", "");

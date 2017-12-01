@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.TimerTask;
 
 /**
- * A class to check for empty voicechannels and removes them if they exist for more than 1 minute and are empty
+ * A class to check for empty voice channels and removes them if they exist for more than 1 minute and are empty
  */
 public class VoiceChannelTimeCheck extends TimerTask
 {
@@ -50,8 +50,8 @@ public class VoiceChannelTimeCheck extends TimerTask
     }
 
     /**
-     * Checks all voicechannels for members and if it exists for more than one minute
-     * @param voiceChannels all voicechannels that need to be checked
+     * Checks all voice channels for members and if it exists for more than one minute
+     * @param voiceChannels all voice channels that need to be checked
      */
     private void checkVoiceChannels(List<VoiceChannel> voiceChannels)
     {
@@ -63,7 +63,7 @@ public class VoiceChannelTimeCheck extends TimerTask
     }
 
     /**
-     * Checks one voicechannel for members and if it exists for more than one minute
+     * Checks one voice channel for members and if it exists for more than one minute
      * @param voiceChannel that needs to be checked
      */
     private void checkVoiceChannel(VoiceChannel voiceChannel)

@@ -9,7 +9,7 @@ import toolbox.StringHelper;
 import java.util.List;
 
 /**
- * Command to create a new channel within the configured voicechannel category
+ * Command to create a new channel within the configured voice channel category
  */
 public class MakeChannelCommand implements ICommand
 {
@@ -49,12 +49,12 @@ public class MakeChannelCommand implements ICommand
             }
             else
             {
-                errormention(message, "Error, A channelname is required to be at least 2 characters long");
+                errorMention(message, "Error, A channel name is required to be at least 2 characters long");
             }
         }
         else
         {
-            errormention(message, String.format("Error, couldn't create a channel due to missing channelname.%n" +
+            errorMention(message, String.format("Error, couldn't create a channel due to missing channel name.%n" +
                     "Please create a channel like so: \"!makeChannel " + message.getAuthor().getName() + "'s channel\""));
         }
     }
@@ -107,7 +107,7 @@ public class MakeChannelCommand implements ICommand
 
         if (categories == null)
         {
-            errormention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
+            errorMention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
             return;
         }
 
@@ -124,13 +124,13 @@ public class MakeChannelCommand implements ICommand
     /**
      * Sends an error message to the message sender
      * @param message the message that originally got send
-     * @param errormessage the message that will be send back in reply
+     * @param errorMessage the message that will be send back in reply
      */
-    private void errormention(Message message, String errormessage)
+    private void errorMention(Message message, String errorMessage)
     {
         String authorMention = message.getAuthor().getAsMention();
-        String errorMessage = authorMention + " " + errormessage;
-        message.getChannel().sendMessage(errorMessage).queue();
+        String sendMessage = authorMention + " " + errorMessage;
+        message.getChannel().sendMessage(sendMessage).queue();
 
     }
 }

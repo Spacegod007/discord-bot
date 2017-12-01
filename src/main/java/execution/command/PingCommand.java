@@ -144,7 +144,7 @@ public class PingCommand implements ICommand
      * @param authorName The name of the sender of the command
      * @param ping the time it takes for the packages to be received as string
      * @param timeType that was used to calculate the ping
-     * @return a prebuilded version of the embeddedmessage
+     * @return a pre-build version of the embedded message
      */
     private EmbedBuilder createEmbeddedMessage(String authorName, String ping, TimeTypes timeType)
     {
