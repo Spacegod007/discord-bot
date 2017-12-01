@@ -2,7 +2,6 @@ package decision;
 
 import execution.ICommand;
 import execution.command.*;
-import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -33,10 +32,9 @@ public class CommandManager extends ListenerAdapter
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event)
     {
-        Message message = event.getMessage();
+        String stringCommand = event.getMessage().getContent().split(" ")[0];
 
-        String stringCommand = message.getContent().split(" ")[0];
-
+        //checks if the message is not a command
         if (!stringCommand.startsWith(prefix) || stringCommand.length() < 2 || event.getAuthor().isBot())
         {
             return;
@@ -44,42 +42,45 @@ public class CommandManager extends ListenerAdapter
 
         try
         {
-            ICommand executableCommand;
             Commands command = Commands.valueOf(stringCommand.substring(1).toUpperCase());
 
-            switch (command)
-            {
-                case PING:
-                    executableCommand = new PingCommand(event);
-                    break;
-                case MAKECHANNEL:
-                case MKC:
-                    executableCommand = new MakeChannelCommand(event, voiceCreateCategory);
-                    break;
-                case HELP:
-                    executableCommand = new HelpCommand(event, prefix);
-                    break;
-                case CLEARCHAT:
-                    executableCommand = new ClearChatCommand(event);
-                    break;
-                case ROCKPAPERSCISSORS:
-                case RPC:
-                    executableCommand = new RockPaperScissorsCommand(event);
-                    break;
-                case COUNTDOWN:
-                    executableCommand = new CountDownCommand(event);
-                    break;
-                case WHOAREYOU:
-                case WAY:
-                    executableCommand = new WhoAreYouCommand(event);
-                    break;
-                default:
-                    return;
-            }
+            ICommand executableCommand = getCommandInstance(command, event);
 
             new Thread(executableCommand).start();
         }
         catch (IllegalArgumentException ignored)
-        { }
+        { /* message was not a command but it looked enough alike to trigger an exception */ }
+    }
+
+    /**
+     * Gets an instance of the specified command
+     * @param command of which an instance is needed
+     * @param event that triggered a command
+     * @return an ICommand object containing the specified command
+     */
+    private ICommand getCommandInstance(Commands command, GuildMessageReceivedEvent event)
+    {
+        switch (command)
+        {
+            case PING:
+                return new PingCommand(event);
+            case MAKECHANNEL:
+            case MKC:
+                return new MakeChannelCommand(event, voiceCreateCategory);
+            case HELP:
+                return new HelpCommand(event, prefix);
+            case CLEARCHAT:
+                return new ClearChatCommand(event);
+            case ROCKPAPERSCISSORS:
+            case RPC:
+                return new RockPaperScissorsCommand(event);
+            case COUNTDOWN:
+                return new CountDownCommand(event);
+            case WHOAREYOU:
+            case WAY:
+                return new WhoAreYouCommand(event);
+            default:
+                return null;
+        }
     }
 }
