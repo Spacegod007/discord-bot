@@ -37,7 +37,7 @@ public class CommandManager extends ListenerAdapter
 
         String stringCommand = message.getContent().split(" ")[0];
 
-        if (!stringCommand.startsWith(prefix) || stringCommand.length() < 2)
+        if (!stringCommand.startsWith(prefix) || stringCommand.length() < 2 || event.getAuthor().isBot())
         {
             return;
         }
