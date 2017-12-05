@@ -47,6 +47,13 @@ public enum Commands
             new CommandArgument("[number]", "from what number the countdown needs to start")
     ),
 
+    RANDOMNUMBER("A command to get a random number",
+            new CommandArgument("[highest]", "highest value possible"),
+            new CommandArgument("[lowest] [highest]", "lowest and highest value possible")
+    ),
+    RNUM("Short for \"Random Number\""
+    ),
+
     WHOAREYOU("A command which tells you who this bot is"
     ),
     WAY("Short for \"Who Are You\""),

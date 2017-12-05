@@ -15,8 +15,15 @@ import java.text.MessageFormat;
  */
 public class PingCommand implements ICommand
 {
+    /**
+     * The event that triggered this command
+     */
     private final GuildMessageReceivedEvent event;
 
+    /**
+     * The constructor of the ping command
+     * @param event
+     */
     public PingCommand(GuildMessageReceivedEvent event)
     {
         this.event = event;

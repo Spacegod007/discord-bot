@@ -76,6 +76,9 @@ public class CommandManager extends ListenerAdapter
                 return new RockPaperScissorsCommand(event);
             case COUNTDOWN:
                 return new CountDownCommand(event);
+            case RANDOMNUMBER:
+            case RNUM:
+                return new RandomNumberCommand(event);
             case WHOAREYOU:
             case WAY:
                 return new WhoAreYouCommand(event);

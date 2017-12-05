@@ -13,9 +13,21 @@ import java.awt.*;
  */
 public class HelpCommand implements ICommand
 {
+    /**
+     * Event that triggered this command
+     */
     private final GuildMessageReceivedEvent event;
+
+    /**
+     * The prefix of every command
+     */
     private final String prefix;
 
+    /**
+     * The constructor of the help command
+     * @param event that triggered this command
+     * @param prefix of every command
+     */
     public HelpCommand(GuildMessageReceivedEvent event, String prefix)
     {
         this.event = event;

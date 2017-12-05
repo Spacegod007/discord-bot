@@ -7,10 +7,20 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 
+/**
+ * Supposedly clears the chat
+ */
 public class ClearChatCommand implements ICommand
 {
+    /**
+     * The event that triggered this command
+     */
     private final GuildMessageReceivedEvent event;
 
+    /**
+     * Constructs the clearchat command
+     * @param event that triggered this command
+     */
     public ClearChatCommand(GuildMessageReceivedEvent event)
     {
         this.event = event;
