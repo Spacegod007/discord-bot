@@ -18,7 +18,7 @@ public class ClearChatCommand implements ICommand
     private final GuildMessageReceivedEvent event;
 
     /**
-     * Constructs the clearchat command
+     * Constructs the clear chat command
      * @param event that triggered this command
      */
     public ClearChatCommand(GuildMessageReceivedEvent event)

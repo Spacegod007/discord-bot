@@ -22,7 +22,7 @@ public class PingCommand implements ICommand
 
     /**
      * The constructor of the ping command
-     * @param event
+     * @param event that triggered this command
      */
     public PingCommand(GuildMessageReceivedEvent event)
     {
