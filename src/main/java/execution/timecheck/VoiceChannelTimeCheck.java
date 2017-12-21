@@ -60,21 +60,10 @@ public class VoiceChannelTimeCheck extends TimerTask
         //get category where channels exists (should only return one value)
         List<Category> voiceChannelCategory = guild.getCategoriesByName(voiceChannelCategoryName, true);
 
-        if (voiceChannelCategory != null || !voiceChannelCategory.isEmpty())
+        assert voiceChannelCategory != null;
+        for (Category voiceCategory : voiceChannelCategory)
         {
-            for (Category voiceCategory : voiceChannelCategory)
-            {
-                checkVoiceChannels(voiceCategory.getVoiceChannels());
-            }
-        }
-        else
-        {
-            try
-            {
-                checkVoiceChannels(guild.getCategoryById(Long.parseLong(voiceChannelCategoryName)).getVoiceChannels());
-            }
-            catch (NumberFormatException ignored)
-            { }
+            checkVoiceChannels(voiceCategory.getVoiceChannels());
         }
     }
 
