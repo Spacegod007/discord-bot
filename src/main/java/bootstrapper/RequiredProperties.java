@@ -17,15 +17,7 @@ public enum RequiredProperties
             "if you type {disable} here, this will disable this feature"),
 
     Playing("Warning, missing playing status, bot is not playing anything",
-            "Message of what the bot is currently playing"),
-
-    Welcome("Warning, missing welcome message",
-            "Bot will not show any kind of welcome message",
-            "Welcome message when someone joins the server",
-            "{user} will be swapped with the name of the person who joined",
-            "{return} will insert a new line at this position",
-            "{owner} will be swapped with the name of the owner of the server",
-            "{disable} will disable this feature");
+            "Message of what the bot is currently playing");
 
     /**
      * The message shown when the property is missing

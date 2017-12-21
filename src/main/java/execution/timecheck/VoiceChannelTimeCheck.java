@@ -24,16 +24,33 @@ public class VoiceChannelTimeCheck extends TimerTask
 
         List<Category> guildCategories = guild.getCategoriesByName(autoVoiceChannelCategoryName, true);
 
-        if (guildCategories.isEmpty())
+        if (guildCategories == null || guildCategories.isEmpty())
         {
-            TextChannel defaultChannel = guild.getDefaultChannel();
-
-            if (defaultChannel != null)
+            try
             {
-                defaultChannel.sendMessage(String.format("This server does not contain a category by the name: '" + autoVoiceChannelCategoryName + "'," +
-                        "%nWhich is required for this an automatic channel creation system." +
-                        "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category.")).queue();
+                Category guildCategory = guild.getCategoryById(Long.parseLong(voiceChannelCategoryName));
+
+                if (guildCategory == null)
+                {
+                    showCategoryError();
+                }
             }
+            catch (NumberFormatException ignored)
+            {
+                showCategoryError();
+            }
+        }
+    }
+
+    private void showCategoryError()
+    {
+        TextChannel defaultChannel = guild.getDefaultChannel();
+
+        if (defaultChannel != null)
+        {
+            defaultChannel.sendMessage(String.format("This server does not contain a category by the name: '" + voiceChannelCategoryName + "'," +
+                    "%nWhich is required for this an automatic channel creation system." +
+                    "%nIf you own this discord bot, change the 'VoiceCreateCategory' property in the bot.properties file to the desired category.")).queue();
         }
     }
 
@@ -43,9 +60,21 @@ public class VoiceChannelTimeCheck extends TimerTask
         //get category where channels exists (should only return one value)
         List<Category> voiceChannelCategory = guild.getCategoriesByName(voiceChannelCategoryName, true);
 
-        for (Category voiceCategory : voiceChannelCategory)
+        if (voiceChannelCategory != null || !voiceChannelCategory.isEmpty())
         {
-            checkVoiceChannels(voiceCategory.getVoiceChannels());
+            for (Category voiceCategory : voiceChannelCategory)
+            {
+                checkVoiceChannels(voiceCategory.getVoiceChannels());
+            }
+        }
+        else
+        {
+            try
+            {
+                checkVoiceChannels(guild.getCategoryById(Long.parseLong(voiceChannelCategoryName)).getVoiceChannels());
+            }
+            catch (NumberFormatException ignored)
+            { }
         }
     }
 

@@ -103,20 +103,38 @@ public class MakeChannelCommand implements ICommand
      */
     private void createVoiceChannelInCategory(Message message, String channelName)
     {
-        List<Category> categories = event.getGuild().getCategories();
+        List<Category> categories = event.getGuild().getCategoriesByName(autoVoiceChannelCategoryName, true);
 
-        if (categories == null)
+        if (categories == null || categories.isEmpty())
         {
-            errorMention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
-            return;
-        }
-
-        for (Category category : categories)
-        {
-            if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
+            try
             {
-                category.createVoiceChannel(channelName).queue();
-                break;
+                Category category = event.getGuild().getCategoryById(Long.parseLong(autoVoiceChannelCategoryName));
+
+                if (category == null)
+                {
+                    errorMention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
+                }
+                else
+                {
+                    category.createVoiceChannel(channelName).queue();
+                }
+            }
+            catch (NumberFormatException ignored)
+            {
+                errorMention(message, "Error, Couldn't make a channel due to missing category '" + autoVoiceChannelCategoryName + "'");
+            }
+        }
+        else
+        {
+
+            for (Category category : categories)
+            {
+                if (category.getName().equalsIgnoreCase(autoVoiceChannelCategoryName))
+                {
+                    category.createVoiceChannel(channelName).queue();
+                    break;
+                }
             }
         }
     }
