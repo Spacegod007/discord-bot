@@ -20,8 +20,9 @@ class Program
     public static void main(String[] args)
     {
         Properties properties = getProperties();
-
-        if (properties != null)
+        
+        assert properties != null;
+        if (!properties.isEmpty())
         {
             if (checkForProperties(properties))
             {
