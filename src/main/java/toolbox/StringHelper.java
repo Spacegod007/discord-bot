@@ -1,5 +1,8 @@
 package toolbox;
 
+/**
+ * Tool class for helper methods with Strings
+ */
 public class StringHelper
 {
     private StringHelper()
