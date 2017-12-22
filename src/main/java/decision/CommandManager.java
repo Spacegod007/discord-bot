@@ -24,11 +24,6 @@ public class CommandManager extends ListenerAdapter
     private final String voiceCreateCategory;
 
     /**
-     * Manager of commands with followups
-     */
-    private final ContinuationCommandManager continuationCommandManager;
-
-    /**
      * Manages actions taken when what command needs to be executed or not
      * @param properties containing prefix for all commands
      */
@@ -36,7 +31,6 @@ public class CommandManager extends ListenerAdapter
     {
         prefix = properties.getProperty("Prefix");
         voiceCreateCategory = properties.getProperty("VoiceCreateCategory");
-        continuationCommandManager = new ContinuationCommandManager(jda);
     }
 
     /**
