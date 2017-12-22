@@ -47,10 +47,14 @@ public class Bot
             //set status to online to mark that the bot is done loading
             me.setStatus(OnlineStatus.ONLINE);
         }
-        catch (LoginException | InterruptedException | RateLimitedException e)
+        catch (InterruptedException | RateLimitedException e)
         {
             e.printStackTrace();
             System.exit(-1);
+        }
+        catch (LoginException e)
+        {
+            System.out.printf("%s%n%s%n", "Error, login failed", "Invalid token received");
         }
     }
 
@@ -73,7 +77,7 @@ public class Bot
     private void addEventListeners()
     {
         jda.addEventListener(
-                new CommandManager(properties),
+                new CommandManager(jda, properties),
                 new GuildManager(jda.getGuilds(), properties)
         );
     }

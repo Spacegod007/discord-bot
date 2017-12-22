@@ -2,6 +2,7 @@ package decision;
 
 import execution.ICommand;
 import execution.command.*;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -12,17 +13,30 @@ import java.util.Properties;
  */
 public class CommandManager extends ListenerAdapter
 {
+    /**
+     * Prefix of all commands
+     */
     private final String prefix;
+
+    /**
+     * Name of category to create voice channels at
+     */
     private final String voiceCreateCategory;
+
+    /**
+     * Manager of commands with followups
+     */
+    private final ContinuationCommandManager continuationCommandManager;
 
     /**
      * Manages actions taken when what command needs to be executed or not
      * @param properties containing prefix for all commands
      */
-    public CommandManager(Properties properties)
+    public CommandManager(JDA jda, Properties properties)
     {
         prefix = properties.getProperty("Prefix");
         voiceCreateCategory = properties.getProperty("VoiceCreateCategory");
+        continuationCommandManager = new ContinuationCommandManager(jda);
     }
 
     /**
