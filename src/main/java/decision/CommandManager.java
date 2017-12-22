@@ -2,7 +2,6 @@ package decision;
 
 import execution.ICommand;
 import execution.command.*;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -27,7 +26,7 @@ public class CommandManager extends ListenerAdapter
      * Manages actions taken when what command needs to be executed or not
      * @param properties containing prefix for all commands
      */
-    public CommandManager(JDA jda, Properties properties)
+    public CommandManager(Properties properties)
     {
         prefix = properties.getProperty("Prefix");
         voiceCreateCategory = properties.getProperty("VoiceCreateCategory");

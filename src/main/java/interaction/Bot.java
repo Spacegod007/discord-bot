@@ -77,7 +77,7 @@ public class Bot
     private void addEventListeners()
     {
         jda.addEventListener(
-                new CommandManager(jda, properties),
+                new CommandManager(properties),
                 new GuildManager(jda.getGuilds(), properties)
         );
     }
