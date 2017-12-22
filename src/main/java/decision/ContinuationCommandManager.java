@@ -25,6 +25,11 @@ public class ContinuationCommandManager
     private final JDA jda;
 
     /**
+     * Makes sure methods won't overlap in different threads
+     */
+    private final Object synchronize;
+
+    /**
      * Constructs the manager of commands with followups
      * @param jda for interaction with discord services
      */
@@ -32,6 +37,7 @@ public class ContinuationCommandManager
     {
         this.jda = jda;
 
+        synchronize = new Object();
         executedCommands = new ArrayList<>();
      /*
       Timer to check when a continuationCommand has expired its duration
@@ -55,20 +61,23 @@ public class ContinuationCommandManager
      */
     public void checkRunningContinuations(ContinuationCommand newContinuation)
     {
-        for (int i = 0; i < executedCommands.size(); i++)
+        synchronized (synchronize)
         {
-            ContinuationCommand continuationCommand = executedCommands.get(i);
-
-            if (newContinuation.getUser().equals(continuationCommand.getUser()))
+            for (int i = 0; i < executedCommands.size(); i++)
             {
-                executedCommands.remove(continuationCommand);
-                jda.removeEventListener(continuationCommand);
-                break;
-            }
-        }
+                ContinuationCommand continuationCommand = executedCommands.get(i);
 
-        executedCommands.add(newContinuation);
-        jda.addEventListener(newContinuation);
+                if (newContinuation.getUser().equals(continuationCommand.getUser()))
+                {
+                    executedCommands.remove(continuationCommand);
+                    jda.removeEventListener(continuationCommand);
+                    break;
+                }
+            }
+
+            executedCommands.add(newContinuation);
+            jda.addEventListener(newContinuation);
+        }
     }
 
     /**
@@ -76,18 +85,20 @@ public class ContinuationCommandManager
      */
     private void removeTenMinuteActiveContinuations()
     {
-        for (int i = 0; i < executedCommands.size();)
+        synchronized (synchronize)
         {
-            ContinuationCommand continuationCommand = executedCommands.get(i);
-            OffsetDateTime currentTime = OffsetDateTime.now();
+            for (int i = 0; i < executedCommands.size(); )
+            {
+                ContinuationCommand continuationCommand = executedCommands.get(i);
+                OffsetDateTime currentTime = OffsetDateTime.now();
 
-            if (currentTime.toEpochSecond() > (continuationCommand.getLastInteraction().toEpochSecond() + 600))
-            {
-                executedCommands.remove(continuationCommand);
-            }
-            else
-            {
-                i++;
+                if (currentTime.toEpochSecond() > (continuationCommand.getLastInteraction().toEpochSecond() + 600))
+                {
+                    executedCommands.remove(continuationCommand);
+                } else
+                {
+                    i++;
+                }
             }
         }
     }
